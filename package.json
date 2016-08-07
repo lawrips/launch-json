@@ -1,6 +1,6 @@
 {
   "name": "launch-json",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Loads vscode's launch.json environment variables so that you can run your node app from the command line",
   "main": "index.js",
   "scripts": {
