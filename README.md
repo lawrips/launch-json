@@ -1,14 +1,22 @@
 # launch-json
-Helper library that loads the environment variables from vscode's launch.json so that you can run your node app from the command line.
+Helper library that loads the environment variables from Visual Studio Code's ([vscode](https://code.visualstudio.com)) launch.json so that you can run your node app from the command line.
 
 ## Usage
-Anywhere in your project, just include the following line:
+In your startup file (e.g. server.js, index.js or app.js), just include the following line:
 
 ```javascript
 require('launch-json');
 ```
-That's it! This module will then find the .vscode/launch.json file and merge the environment variables with your process.env. This will then allow you to run your node app from the command line without having to manually set the environment variables. 
+That's it! This module will then find the .vscode/launch.json file in your project and merge the environment variables into your process.env.
 
+This will then allow you to run your node app from the command line without having to manually set the environment variables in your launch.json. 
+
+
+## Why launch-json? 
+This library is designed specifically for users of vscode who store environment variables in their project's launch.json. There's a few scenarios where using this library might be useful: 
+* You want to make sure your code runs the same outside of vscode (which starts node processes by default with --debug enabled)
+* You have Mocha tests (or tests from another test framework) which rely on environment variables
+* Your environment variables have colon's in them. These are a pain to export into environment variables on macos
 
 ## Options
 When required as above, this will load the default "launch" configuration from the .vscode/launch.json file. To choose a specific configuration, simply:
@@ -28,14 +36,7 @@ Assume you have the following launch.json:
             "type": "node",
             "request": "launch",
             "program": "${workspaceRoot}/lib/index.js",
-            "stopOnEntry": false,
-            "args": [],
             "cwd": "${workspaceRoot}",
-            "preLaunchTask": null,
-            "runtimeExecutable": null,
-            "runtimeArgs": [
-                "--nolazy"
-            ],
             "env": {
                 "NODE_ENV": "development",
                 "theFox":"red",
@@ -46,11 +47,10 @@ Assume you have the following launch.json:
 }
 ```
 
-After including the line require('launch-json'), your process.env will now have the additional three variables:
+After including the line require('launch-json'), your process.env will now have the additional three variables. So each of the following will work:
+```javascript
+process.env['NODE_ENV']; // development
+process.env['theFox']; // red
+process.env['theDog']; // brown
 ```
-"NODE_ENV": "development",
-"theFox":"red",
-"theDog":"brown"
- ```
-
 
