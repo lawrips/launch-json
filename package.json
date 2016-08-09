@@ -1,6 +1,6 @@
 {
   "name": "launch-json",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Loads Visual Studio Code's (vscode) launch.json environment variables so that you can run your node app from the command line",
   "main": "index.js",
   "scripts": {
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/lawrips/launch-json/issues"
   },
-  "homepage": "https://github.com/lawrips/launch-json#readme"
+  "homepage": "https://github.com/lawrips/launch-json#readme",
+  "devDependencies": {
+    "proxyquire": "^1.7.10"
+  }
 }
