@@ -1,5 +1,5 @@
 # launch-json
-Helper library that loads the environment variables from Visual Studio Code's ([vscode](https://code.visualstudio.com)) launch.json so that you can run your node app from the command line.
+Helper library that loads the environment variables from Visual Studio Code's ([vscode](https://code.visualstudio.com)) launch.json into process.env.
 
 ## Usage
 In your startup file (e.g. server.js, index.js or app.js), just include the following line:
@@ -32,25 +32,46 @@ Assume you have the following launch.json:
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch",
+            "name": "launch",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/lib/index.js",
+            "cwd": "${workspaceRoot}",
+            "env": {
+                "NODE_ENV": "local",
+                "theFox":"red",
+                "theDog":"brown"
+            }
+        },
+        {
+            "name": "dev",
             "type": "node",
             "request": "launch",
             "program": "${workspaceRoot}/lib/index.js",
             "cwd": "${workspaceRoot}",
             "env": {
                 "NODE_ENV": "development",
-                "theFox":"red",
-                "theDog":"brown"
+                "theFox":"quick",
+                "theDog":"lazy"
             }
         }
     ]
 }
 ```
 
-After including the line require('launch-json'), your process.env will now have the additional three variables. So each of the following will work:
+The following will work:
 ```javascript
-process.env['NODE_ENV']; // development
+require('launch-json'); // launch is selected by default
+process.env['NODE_ENV']; // local
 process.env['theFox']; // red
 process.env['theDog']; // brown
+```
+
+The following will work:
+```javascript
+require('launch-json')('dev'); // dev will load
+process.env['NODE_ENV']; // development
+process.env['theFox']; // quick
+process.env['theDog']; // lazy
 ```
 
